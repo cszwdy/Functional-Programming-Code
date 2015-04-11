@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 5</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h1 id="quickcheck">QuickCheck</h1>
+<p>In recent years, testing has become much more prevalent in Objective-C.
+Many popular libraries are now tested automatically with continuous
+integration tools. The standard framework for writing unit tests is
+<a href="http://objc.io/fpinswift/11">XCTest</a>. Additionally, a lot of
+third-party frameworks (such as Specta, Kiwi, and FBSnapshotTestCase)
+are already available, and a number of new frameworks are currently
+being developed in Swift.</p>
+<p>All of these frameworks follow a similar pattern: Tests typically
+consist of some fragment of code, together with an expected result. The
+code is then executed, and its result is compared to the expected result
+mentioned in the test. Different libraries test at different levels —
+some test individual methods, some test classes, and some perform
+integration testing (running the entire app). In this chapter, we will
+build a small library for property-based testing of Swift functions. We
+will build this library in an iterative fashion, improving it step by
+step.</p>
+<p>When writing unit tests, the input data is static and defined by the
+programmer. For example, when unit testing an addition method, we might
+write a test that verifies that <code>1 + 1</code> is equal to <code>2</code>. If the
+implementation of addition changes in such a way that this property is
+broken, the test will fail. More generally, however, we could choose to
+test that the addition is commutative — in other words, that <code>a + b</code> is
+equal to <code>b + a</code>. To test this, we could write a test case that verifies
+that <code>42 + 7</code> is equal to <code>7 + 42</code>.</p>
+<p>QuickCheck [@claessen:quickcheck] is a Haskell library for random
+testing. Instead of writing individual unit tests, each of which tests
+that a function is correct for some particular input, QuickCheck allows
+you to describe abstract <em>properties</em> of your functions and <em>generate</em>
+tests to verify these properties. When a property passes, it doesn&#39;t
+necessarily prove that the property is correct. Rather, QuickCheck aims
+to find boundary conditions that invalidate the property. In this
+chapter, we&#39;ll build a (partial) Swift port of QuickCheck.</p>
+<p>This is best illustrated with an example. Suppose we want to verify that
+addition is a commutative operation. To do so, we start by writing a
+function that checks whether <code>x + y</code> is equal to <code>y + x</code> for the two
+integers <code>x</code> and <code>y</code>:</p>
+
+  </section>
+</div>
+</body>
+</html>

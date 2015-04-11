@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 37</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>So why is currying interesting? As we have seen in this book thus far,
+there are scenarios where you want to pass functions as arguments to
+other functions. If we have <em>uncurried</em> functions, like <code>add1</code>, we can
+only apply a function to <em>both</em> its arguments. On the other hand, for a
+<em>curried</em> function, like <code>add2</code>, we have a choice: we can apply it to
+one <em>or</em> two arguments. The functions for creating filters that we have
+defined in this chapter have all been curried — they all expected an
+additional image argument. By writing our filters in this style, we were
+able to compose them easily using the <code>&gt;&gt;&gt;</code> operator. Had we instead
+worked with <em>uncurried</em> versions of the same functions, it still would
+have been possible to write the same filters and filter composition
+operator, but the resulting code would have been much clunkier.</p>
+<h2 id="discussion">Discussion</h2>
+<p>This example illustrates, once again, how we break complex code into
+small pieces, which can all be reassembled using function application.
+The goal of this chapter was not to define a complete API around Core
+Image, but instead to sketch out how higher-order functions and function
+composition can be used in a more practical case study.</p>
+<p>Why go through all this effort? It&#39;s true that the Core Image API is
+already mature and provides all the functionality you might need. But in
+spite of this, we believe there are several advantages to the API
+designed in this chapter:</p>
+<ul>
+<li><strong>Safety</strong> — using the API we have sketched, it is almost impossible
+to create runtime errors arising from undefined keys or failed
+casts.</li>
+<li><strong>Modularity</strong> — it is easy to compose filters using the <code>&gt;&gt;&gt;</code>
+operator. Doing so allows you to tease apart complex filters into
+smaller, simpler, reusable components. Additionally, composed
+filters have the exact same type as their building blocks, so you
+can use them interchangeably.</li>
+<li><strong>Clarity</strong> — even if you have never used Core Image, you should be
+able to assemble simple filters using the functions we have defined.
+To access the results, you don&#39;t need to know about special
+dictionary keys, such as <code>kCIOutputImageKey</code>, or worry about
+initializing certain keys, such as <code>kCIInputImageKey</code> or
+<code>kCIInputRadiusKey</code>. From the types alone, you can almost figure out
+how to use the API, even without further documentation.</li>
+</ul>
+<p>Our API presents a series of functions that can be used to define and
+compose filters. Any filters that you define are safe to use and reuse.
+Each filter can be tested and understood in isolation. We believe these
+are compelling reasons to favor the design sketched here over the
+original Core Image API.</p>
+
+  </section>
+</div>
+</body>
+</html>

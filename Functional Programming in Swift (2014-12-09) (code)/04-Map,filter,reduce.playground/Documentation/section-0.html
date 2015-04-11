@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 1</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h1 id="map-filter-reduce">Map, Filter, Reduce</h1>
+<p>Functions that take functions as arguments are sometimes called
+<em>higher-order</em> functions. In this chapter, we will tour some of the
+higher-order functions on arrays from the Swift standard library. By
+doing so, we will introduce Swift&#39;s <em>generics</em> and show how to assemble
+complex computations on arrays.</p>
+<h2 id="introducing-generics">Introducing Generics</h2>
+<p>Suppose we need to write a function that, given an array of integers,
+computes a new array, where every integer in the original array has been
+incremented by one. Such a function is easy to write using a single
+<code>for</code> loop:</p>
+<pre><code>func incrementArray(xs: [Int]) -&gt; [Int] {
+    var result: [Int] = []
+    for x in xs {
+        result.append(x + 1)
+    }
+    return result
+}
+</code></pre><p>Now suppose we also need a function that computes a new array, where
+every element in the argument array has been doubled. This is also easy
+to do using a <code>for</code> loop:</p>
+<pre><code>func doubleArray1(xs: [Int]) -&gt; [Int] {
+    var result: [Int] = []
+    for x in xs {
+        result.append(x * 2)
+    }
+    return result
+}
+</code></pre><p>Both of these functions share a lot of code. Can we abstract over the
+differences and write a single, more general function that captures this
+pattern? Such a function would look something like this:</p>
+<pre><code>func computeIntArray(xs: [Int]) -&gt; [Int] {
+    var result: [Int] = []
+    for x in xs {
+        result.append(/* something using x */)
+    }
+    return result
+}
+</code></pre><p>To complete this definition, we need to add a new argument describing
+how to compute a new integer from the individual elements of the array —
+that is, we need to pass a function as an argument:</p>
+
+  </section>
+</div>
+</body>
+</html>

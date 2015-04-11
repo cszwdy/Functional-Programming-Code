@@ -1,0 +1,1 @@
+let immutablePoint = PointStruct(x: 0, y: 0)

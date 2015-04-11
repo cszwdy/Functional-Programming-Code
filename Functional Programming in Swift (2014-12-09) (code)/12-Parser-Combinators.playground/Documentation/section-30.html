@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 31</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h2 id="sequence">Sequence</h2>
+<p>To combine two parsers that occur after each other, we&#39;ll start with a
+more naive approach and expand that later to something more convenient
+and powerful. First we write a <code>sequence</code> function:</p>
+<pre><code>func sequence&lt;Token, A, B&gt;(l: Parser&lt;Token, A&gt;, 
+                           r: Parser&lt;Token, B&gt;) 
+                           -&gt; Parser&lt;Token, (A, B)&gt;
+</code></pre><p>The returned parser first uses the left parser to parse something of
+type <code>A</code>. Let&#39;s say we wanted to parse the string <code>&quot;xyz&quot;</code> for an <code>&quot;x&quot;</code>
+immediately followed by a <code>&quot;y.&quot;</code> The left parser (the one looking for an
+<code>&quot;x&quot;</code>) would then generate the following sequence containing a single
+(result, remainder) tuple:</p>
+<pre><code>[ (&quot;x&quot;, &quot;yz&quot;) ]
+</code></pre><p>Applying the right parser to the remainder (<code>&quot;yz&quot;</code>) of the left parser&#39;s
+tuple yields another sequence with one tuple:</p>
+<pre><code>[ (&quot;y&quot;, &quot;z&quot;) ]
+</code></pre><p>We then combine those tuples by grouping the <code>&quot;x&quot;</code> and <code>&quot;y&quot;</code> into a new
+tuple (&quot;x&quot;, &quot;y&quot;):</p>
+<pre><code>[ ((&quot;x&quot;, &quot;y&quot;), &quot;z&quot;) ]
+</code></pre><p>Since we are doing these steps for each tuple in the returned sequence
+of the left parser, we end up with a sequence of sequences:</p>
+<pre><code>[ [ ((&quot;x&quot;, &quot;y&quot;), &quot;z&quot;) ] ]
+</code></pre><p>Finally, we flatten this structure to a simple sequence of
+<code>((A, B), Slice&lt;Token&gt;)</code> tuples. In code, the whole <code>sequence</code> function
+looks like this:</p>
+
+  </section>
+</div>
+</body>
+</html>

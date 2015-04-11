@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 65</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>We no longer need to define two different versions of the same function,
+the curried and the uncurried, as we did in the last chapter. Instead,
+generic functions such as <code>curry</code> can be used to transform <em>functions</em> —
+computing the curried version from the uncurried. Once again, the type
+of this function is so generic that it (almost) gives a complete
+specification: there really is only one sensible implementation.</p>
+<p>Using generics allows you to write flexible functions without
+compromising type safety; if you use the <code>Any</code> type, you&#39;re pretty much
+on your own.</p>
+<h2 id="notes">Notes</h2>
+<p>The history of generics traces back to @strachey, Girard&#39;s <em>System F</em>
+[-@girard], and @reynolds:polymorphism. Note that these authors refer to
+generics as (parametric) polymorphism, a term that is still used in many
+other functional languages. Many object-oriented languages use the term
+polymorphism to refer to implicit casts arising from subtyping, so the
+term generics was introduced to disambiguate between the two concepts.</p>
+<p>The process that we sketched informally above, motivating why there can
+only be one possible function with the generic type</p>
+<pre><code>(f: A -&gt; B, g: B -&gt; C) -&gt; A -&gt; C
+</code></pre><p>can be made mathematically precise. This was first done by
+@reynolds:parametricity; later @wadler referred to this as <em>Theorems for
+free!</em> — emphasizing how you can compute a theorem about a generic
+function from its type.</p>
+
+  </section>
+</div>
+</body>
+</html>

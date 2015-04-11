@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 39</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Before we define a generator that produces the elements of this tree, we
+need to define an auxiliary function. In the Swift standard library,
+there is a <code>GeneratorOfOne</code> struct that can be useful for wrapping an
+optional value as a generator:</p>
+<pre><code>struct GeneratorOfOne&lt;T&gt;: GeneratorType, SequenceType {
+    init(_ element: T?)
+    // ...
+}
+</code></pre><p>Given an optional element, it generates the sequence with just that
+element (provided it is non-nil):</p>
+
+  </section>
+</div>
+</body>
+</html>

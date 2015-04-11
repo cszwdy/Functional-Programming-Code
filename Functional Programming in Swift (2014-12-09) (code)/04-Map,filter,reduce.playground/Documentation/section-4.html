@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 5</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Note that we are using Swift&#39;s syntax for <a href="http://objc.io/fpinswift/6">trailing
+closures</a> here — we provide the final
+(closure) argument to <code>computeIntArray</code> after the parentheses containing
+the other arguments.</p>
+<p>This code is still not as flexible as it could be. Suppose we want to
+compute a new array of booleans, describing whether the numbers in the
+original array were even or not. We might try to write something like
+this:</p>
+<pre><code>func isEvenArray(xs: [Int]) -&gt; [Bool] {
+    computeIntArray(xs) { x in x % 2 == 0 }
+}
+</code></pre><p>Unfortunately, this code gives a type error. The problem is that our
+<code>computeIntArray</code> function takes an argument of type <code>Int -&gt; Int</code>, that
+is, a function that returns an integer. In the definition of
+<code>isEvenArray</code>, we are passing an argument of type <code>Int -&gt; Bool</code>, which
+causes the type error.</p>
+<p>How should we solve this? One thing we <em>could</em> do is define a new
+version of <code>computeIntArray</code> that takes a function argument of type
+<code>Int -&gt; Bool</code>. That might look something like this:</p>
+<pre><code>func computeBoolArray(xs: [Int], f: Int -&gt; Bool) -&gt; [Bool] {
+    let result: [Bool] = []
+    for x in xs {
+        result.append(f(x))
+    }
+    return result
+}
+</code></pre><p>This doesn&#39;t scale very well though. What if we need to compute a
+<code>String</code> next? Do we need to define yet another higher-order function,
+expecting an argument of type <code>Int -&gt; String</code>?</p>
+<p>Luckily, there is a solution to this problem: we can use
+<a href="http://objc.io/fpinswift/7">generics</a>. The definitions of
+<code>computeBoolArray</code> and <code>computeIntArray</code> are identical; the only
+difference is in the <em>type signature</em>. If we were to define another
+version, <code>computeStringArray</code>, the body of the function would be the
+same again. In fact, the same code will work for <em>any</em> type. What we
+really want to do is write a single generic function that will work for
+every possible type:</p>
+
+  </section>
+</div>
+</body>
+</html>

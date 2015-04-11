@@ -1,0 +1,1 @@
+testParser(pure(toInteger2) <*> token(three) <*> token(three), "33")

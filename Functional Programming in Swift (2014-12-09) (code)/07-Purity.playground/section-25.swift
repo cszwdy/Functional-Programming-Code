@@ -1,0 +1,1 @@
+immutablePoint2 = ImmutablePointStruct(x: 2, y: 2)

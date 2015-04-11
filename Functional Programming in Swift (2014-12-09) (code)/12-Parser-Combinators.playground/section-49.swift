@@ -1,0 +1,1 @@
+testParser(combinator(integerParser(), token(three)), "3")

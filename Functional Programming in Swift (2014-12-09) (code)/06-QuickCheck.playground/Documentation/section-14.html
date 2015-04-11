@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 15</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Of course, there are many other similar properties of standard
+arithmetic that we can test. We will cover more interesting tests and
+properties shortly. Before we do so, however, we will give some more
+details about how QuickCheck is implemented.</p>
+<h2 id="building-quickcheck">Building QuickCheck</h2>
+<p>In order to build our Swift implementation of QuickCheck, we will need
+to do a couple of things.</p>
+<ul>
+<li>First, we need a way to generate random values for different types.</li>
+<li>Using these random value generators, we need to implement the
+<code>check</code> function, which passes random values to its argument
+property.</li>
+<li>If a test fails, we would like to make the test input as small as
+possible. For example, if our test fails on an array with 100
+elements, we&#39;ll try to make it smaller and see if the test still
+fails.</li>
+<li>Finally, we&#39;ll need to do some extra work to make sure our check
+function works on types that have generics.</li>
+</ul>
+<h3 id="generating-random-values">Generating Random Values</h3>
+<p>First, let&#39;s define a <a href="http://objc.io/fpinswift/13">protocol</a> that knows
+how to generate arbitrary values. This protocol contains only one
+function, <code>arbitrary</code>, which returns a value of type <code>Self</code>, i.e. an
+instance of the class or struct that implements the <code>Arbitrary</code>
+protocol:</p>
+<pre><code>protocol Arbitrary {
+    class func arbitrary() -&gt; Self
+}
+</code></pre><p>So let&#39;s write an instance for <code>Int</code>. We use the <code>arc4random</code> function
+from the standard library and convert it into an <code>Int</code>. Note that this
+only generates positive integers. A real implementation of the library
+would generate negative integers as well, but we&#39;ll try to keep things
+simple in this chapter:</p>
+
+  </section>
+</div>
+</body>
+</html>

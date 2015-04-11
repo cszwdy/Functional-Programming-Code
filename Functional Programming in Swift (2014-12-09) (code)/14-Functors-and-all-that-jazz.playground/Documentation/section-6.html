@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 7</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Such regions are a good example of a functor that does not fit well with
+the intuition of functors being containers. Here, we have represented
+regions as <em>functions</em>, which seem very different from containers.</p>
+<p>Almost every generic enumeration that you can define in Swift will be a
+functor. Providing a <code>map</code> function gives fellow developers a powerful,
+yet familiar, function for working with such enumerations.</p>
+<h2 id="applicative-functors">Applicative Functors</h2>
+<p>Many functors also support other operations aside from <code>map</code>. For
+example, the parsers from <a href="#parser-combinators">Chapter 12</a> were not
+only functors, but also defined the following two operations:</p>
+<pre><code>func pure&lt;Token, A&gt;(value: A) -&gt; Parser&lt;Token, A&gt;
+
+func &lt;*&gt;&lt;Token, A, B&gt;(l: Parser&lt;Token, A -&gt; B&gt;,
+                      r: Parser&lt;Token, A&gt;) -&gt; Parser&lt;Token, B&gt;
+</code></pre><p>The <code>pure</code> function explains how to turn any value into a (trivial)
+parser that returns that value. Meanwhile, the <code>&lt;*&gt;</code> operator sequences
+two parsers: the first parser returns a function, and the second parser
+returns an argument for this function. The choice for these two
+operations is no coincidence. Any type constructor for which we can
+define appropriate <code>pure</code> and <code>&lt;*&gt;</code> operations is called an <em>applicative
+functor</em>. To be more precise, a functor <code>F</code> is applicative when it
+supports the following operations:</p>
+<pre><code>func pure&lt;A&gt;(value: A) -&gt; F&lt;A&gt;
+
+func &lt;*&gt;&lt;A,B&gt;(f: F&lt;A -&gt; B&gt;, x: F&lt;A&gt;) -&gt; F&lt;B&gt;
+</code></pre><p>Applicative functors have been lurking in the background throughout this
+book. For example, the <code>Region</code> struct defined above is also an
+applicative functor:</p>
+
+  </section>
+</div>
+</body>
+</html>

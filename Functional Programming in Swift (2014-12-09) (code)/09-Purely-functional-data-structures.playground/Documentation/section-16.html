@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 17</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Note that in the <code>Node</code> case for the <code>isEmptySet</code> function, we do not
+need to refer to the subtrees or the value stored at the node, but can
+immediately return <code>false</code>. Correspondingly, we can put wildcard
+patterns for the three values associated with a <code>Node</code>, indicating they
+are not used in this case branch.</p>
+<p>If we try to write naive versions of <code>setInsert</code> and <code>setContains</code>,
+however, it seems that we have not gained much. If we restrict ourselves
+to <em>binary search trees</em>, however, we can perform much better. A
+(non-empty) tree is said to be a binary search tree if all of the
+following conditions are met:</p>
+<ul>
+<li>all the values stored in the left subtree are <em>less</em> than the value
+stored at the root</li>
+<li>all the values stored in the right subtree are <em>greater</em> than the
+value stored at the root</li>
+<li>both the left and right subtrees are binary search trees</li>
+</ul>
+<p>We can write an (inefficient) check to ascertain if a <code>Tree</code> is a binary
+search tree or not:</p>
+
+  </section>
+</div>
+</body>
+</html>

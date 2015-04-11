@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 61</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>In addition to generating sublists, this new version of the <code>smaller</code>
+function also produces arrays, where the values of the elements are
+smaller.</p>
+<h2 id="beyond-map-and-filter">Beyond Map and Filter</h2>
+<p>In the coming chapter, we will need a few more operations on sequences
+and generators. To define those operations, we need the <code>SequenceOf</code>
+struct, defined analogously to the <code>GeneratorOf</code> we saw previously.
+Essentially, it wraps any function that returns a generator in a
+sequence. It is (more or less) defined as follows:</p>
+<pre><code>struct SequenceOf&lt;T&gt; : SequenceType {
+    init&lt;G : GeneratorType&gt;(_ makeUnderlyingGenerator: () -&gt; G)
+
+    func generate() -&gt; GeneratorOf&lt;T&gt;
+}
+</code></pre><p>We have already defined concatenation, using the <code>+</code> operator, on
+generators. A first attempt at defining concatenation for sequences
+might result in the following definition:</p>
+<pre><code>func +&lt;A&gt;(l: SequenceOf&lt;A&gt;, r: SequenceOf&lt;A&gt;) -&gt; SequenceOf&lt;A&gt; {
+  return SequenceOf(l.generate() + r.generate())
+}
+</code></pre><p>This definition calls the generate method of the two argument sequences,
+concatenates these, and assigns the resulting generator to the sequence.
+Unfortunately, it does not quite work as expected. Consider the
+following example:</p>
+<pre><code>let s = SequenceOf([1, 2, 3]) + SequenceOf([4, 5, 6])
+print(&quot;First pass: &quot;)
+for x in s {
+    print(x)
+}
+println(&quot;\nSecond pass:&quot;)
+for x in s {
+    print(x)
+}
+</code></pre><p>We construct a sequence containing the elements <code>[1, 2, 3, 4, 5, 6]</code> and
+traverse it twice, printing the elements we encounter. Somewhat
+surprisingly perhaps, this code produces the following output:</p>
+<pre><code>First pass: 123456
+Second pass:
+</code></pre><p>The second for loop is not producing any output — what went wrong? The
+problem is in the definition of concatenation on sequences. We assemble
+the desired generator, <code>l.generate() + r.generate()</code>. This generator
+produces all the desired elements in the first loop in the example
+above. Once it has been exhausted, however, traversing the compound
+sequence a second time will not produce a fresh generator, but instead
+use the generator that has already been exhausted.</p>
+<p>Fortunately, this problem is easy to fix. We need to ensure that the
+result of our concatenation operation can produce new generators. To do
+so, we pass a <em>function</em> that produces generators, rather than passing a
+fixed generator to the <code>SequenceOf</code> initializer:</p>
+<pre><code>func +&lt;A&gt;(l: SequenceOf&lt;A&gt;, r: SequenceOf&lt;A&gt;) -&gt; SequenceOf&lt;A&gt; {
+  return SequenceOf { l.generate() + r.generate() }
+}
+</code></pre><p>Now, we can iterate over the same sequence multiple times. When writing
+your own methods that combine sequences, it is important to ensure that
+every call to <code>generate()</code> produces a fresh generator that is oblivious
+to any previous traversals.</p>
+<p>Thus far, we can concatenate two sequences. What about flattening a
+sequence of sequences? Before we deal with sequences, let&#39;s try writing
+a <code>join</code> operation that, given a <code>GeneratorOf&lt;GeneratorOf&lt;A&gt;&gt;</code>, produces
+a <code>GeneratorOf&lt;A&gt;</code>:</p>
+
+  </section>
+</div>
+</body>
+</html>

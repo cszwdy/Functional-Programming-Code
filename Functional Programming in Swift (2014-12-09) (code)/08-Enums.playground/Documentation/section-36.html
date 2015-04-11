@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 37</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>This enumeration is empty — it doesn&#39;t have any members. As we hoped,
+this enumeration behaves exactly like the zero of arithmetic: for any
+type <code>T</code>, the types <code>Add&lt;T, Zero&gt;</code> and <code>T</code> are isomorphic. It is fairly
+easy to prove this. We can use <code>InLeft</code> to define a function converting
+<code>T</code> to <code>Add&lt;T,Zero&gt;</code>, and the conversion in the other direction can be
+done by pattern matching.</p>
+<p>So much for addition — let us now consider multiplication. If we have an
+enumeration, <code>T</code>, with three members, and another enumeration, <code>U</code>, with
+two members, how can we define a compound type, <code>Times&lt;T, U&gt;</code>, with six
+members? To do this, the <code>Times&lt;T, U&gt;</code> type should allow you to choose
+<em>both</em> a member of <code>T</code> and a member of <code>U</code>. In other words, it should
+correspond to a pair of two values of type <code>T</code> and <code>U</code> respectively:</p>
+<pre><code>struct Times&lt;T, U&gt; {
+    let fst: T
+    let snd: U
+}
+</code></pre><p>Just as <code>Zero</code> was the unit of addition, the void type, <code>()</code>, is the
+unit of <code>Times</code>:</p>
+<pre><code>typealias One = ()
+</code></pre><p>It is easy to check that many familiar laws from arithmetic are still
+valid when read as isomorphisms between types:</p>
+<ul>
+<li><code>Times&lt;One, T&gt;</code> is isomorphic to <code>T</code></li>
+<li><code>Times&lt;Zero, T&gt;</code>is isomorphic to <code>Zero</code></li>
+<li><code>Times&lt;T, U&gt;</code> is isomorphic to <code>Times&lt;U, T&gt;</code></li>
+</ul>
+<p>Types defined using enumerations and tuples are sometimes referred to as
+<em>algebraic data types</em>, because they have this algebraic structure,
+similar to natural numbers.</p>
+<p>This correspondence between numbers and types runs much deeper than we
+have sketched here. Functions can be shown to correspond to
+exponentiation. There is even <a href="http://objc.io/fpinswift/17">a notion of
+differentiation</a> that can be defined on
+types!</p>
+<p>This observation may not be of much practical value. Rather it shows how
+enumerations, like many of Swift&#39;s features, are not new, but instead
+draw on years of research in mathematics and program language design.</p>
+<h2 id="why-use-enumerations-">Why Use Enumerations?</h2>
+<p>Working with optionals may still be preferable over the <code>Result</code> type
+that we have defined here, for a variety of reasons: the built-in
+syntactic sugar can be convenient; the interface you define will be more
+familiar to Swift developers, as you only rely on existing types instead
+of defining your own enumeration; and sometimes the <code>NSError</code> is not
+worth the additional hassle of defining an enumeration.</p>
+<p>The point we want to make, however, is not that the <code>Result</code> type is the
+best way to handle all errors in Swift. Instead, we hope to illustrate
+how you can use enumerations to define your own types, tailored to your
+specific needs. By making these types precise, you can use Swift&#39;s type
+checking to your advantage and prevent many bugs, before your program
+has been tested or run.</p>
+
+  </section>
+</div>
+</body>
+</html>

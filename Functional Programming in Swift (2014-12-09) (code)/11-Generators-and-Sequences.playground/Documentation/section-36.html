@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 37</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Similarly, we may of course want to filter out certain elements from a
+sequence.</p>
+<p>It is worth pointing out that these <code>map</code> and <code>filter</code> functions do
+<em>not</em> return new sequences, but instead traverse the sequence to produce
+an array. Mathematicians may therefore object to calling such operations
+<code>map</code>s, as they fail to leave the underlying structure (a sequence)
+intact. There are separate versions of <code>map</code> and <code>filter</code> that do
+produce sequences. These are defined as extensions of the <code>LazySequence</code>
+class. A <code>LazySequence</code> is a simple wrapper around regular sequences:</p>
+<pre><code>func lazy&lt;S: SequenceType&gt;(s: S) -&gt; LazySequence&lt;S&gt;
+</code></pre><p>If you need to map or filter sequences that may produce either infinite
+results, or many results that you may not be interested in, be sure to
+use a <code>LazySequence</code> rather than a <code>Sequence</code>. Failing to do so could
+cause your program to diverge or take much longer than you might expect.</p>
+<h2 id="case-study-traversing-a-binary-tree">Case Study: Traversing a Binary Tree</h2>
+<p>To illustrate sequences and generators, we will consider defining a
+traversal on a binary tree. Recall our definition of binary trees from
+<a href="#purely-functional-data-structures">Chapter 8</a>:</p>
+
+  </section>
+</div>
+</body>
+</html>

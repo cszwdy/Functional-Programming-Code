@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 23</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Instead of checking whether or not the element occurs, <code>setInsert</code> finds
+a suitable location to add the new element. If the tree is empty, it
+builds a tree with a single element. If the element is already present,
+it returns the original tree. Otherwise, the <code>setInsert</code> function
+continues recursively, navigating to a suitable location to insert the
+new element.</p>
+<p>The worst-case performance of <code>setInsert</code> and <code>setContains</code> on binary
+search trees is still linear — after all, we could have a very
+unbalanced tree, where every left subtree is empty. More clever
+implementations, such as 2-3 trees, AVL trees, or red-black trees, avoid
+this by maintaining the invariant that each tree is suitably balanced.
+Furthermore, we haven&#39;t written a <code>delete</code> operation, which would also
+require rebalancing. These are tricky operations for which there are
+plenty of well-documented implementations in the literature — once
+again, this example serves as an illustration of working with recursive
+enumerations and does not pretend to be a complete library.</p>
+<h2 id="autocompletion-using-tries">Autocompletion Using Tries</h2>
+<p>Now that we&#39;ve seen binary trees, this last section will cover a more
+advanced and purely functional data structure. Suppose that we want to
+write our own autocompletion algorithm — given a history of searches and
+the prefix of the current search, we should compute an array of possible
+completions.</p>
+<p>Using arrays, the solution is entirely straightforward:</p>
+<pre><code>func autocomplete(history: [String], 
+                   textEntered: String) -&gt; [String] {
+
+    return history.filter { string in 
+        string.hasPrefix(textEntered)
+    }
+}
+</code></pre><p>Unfortunately, this function is not very efficient. For large histories
+and long prefixes, it may be too slow. Once again, we could improve
+performance by keeping the history sorted and using some kind of binary
+search on the history array. Instead, we will explore a different
+solution, using a custom data structure tailored for this kind of query.</p>
+<p><em>Tries</em>, also known as digital search trees, are a particular kind of
+ordered tree. Typically, tries are used to look up a string, which
+consists of a list of characters. Instead of storing strings in a binary
+search tree, it can be more efficient to store them in a structure that
+repeatedly branches over the strings&#39; constituent characters.</p>
+<p>Previously, the binary <code>Tree</code> type had two subtrees at every node.
+Tries, on the other hand, do not have a fixed number of subtrees at
+every node, but instead (potentially) have subtrees for every character.
+For example, we could visualize a trie storing the string &quot;cat,&quot; &quot;car,&quot;
+&quot;cart,&quot; and &quot;dog&quot; as follows:</p>
+<p><em>Playgrounds don&#39;t contain images, please see the book</em></p>
+<p>To determine if the string &quot;care&quot; is in the trie, we follow the path
+from the root, along the edges labeled &#39;c,&#39; &#39;a,&#39; and &#39;r.&#39; As the node
+labeled &#39;r&#39; does not have a child labeled with &#39;e,&#39; the string &quot;care&quot; is
+not in this trie. The string &quot;cat&quot; is in the trie, as we can follow a
+path from the root along edges labeled &#39;c,&#39; &#39;a,&#39; and &#39;t.&#39;</p>
+<p>How can we represent such tries in Swift? As a first attempt, we write a
+struct storing a dictionary, mapping characters to subtries at every
+node:</p>
+<pre><code>struct Trie {
+    let children : [Character: Trie]
+}
+</code></pre><p>There are two improvements we would like to make to this definition.
+First of all, we need to add some additional information to the node.
+From the example trie above, you can see that by adding &quot;cart&quot; to the
+trie, all the prefixes of &quot;cart&quot; — namely &quot;c,&quot; &quot;ca,&quot; and &quot;car&quot; — also
+appear in the trie. As we may want to distinguish between prefixes that
+are or are not in the trie, we will add an additional boolean, <code>isElem</code>,
+to every node. This boolean indicates whether or not the current string
+is in the trie. Finally, we can define a generic trie that is no longer
+restricted to only storing characters. Doing so yields the following
+definition of tries:</p>
+
+  </section>
+</div>
+</body>
+</html>

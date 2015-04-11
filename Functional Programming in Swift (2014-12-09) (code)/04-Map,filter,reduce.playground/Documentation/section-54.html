@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 55</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>We start by filtering out those cities that have less than one million
+inhabitants. We then map our <code>scale</code> function over the remaining cities.
+Finally, we compute a <code>String</code> with a list of city names and
+populations, using the <code>reduce</code> function. Here we use the <code>map</code>,
+<code>filter</code>, and <code>reduce</code> definitions from the <code>Array</code> type in Swift&#39;s
+standard library. As a result, we can chain together the results of our
+maps and filters nicely. The <code>cities.filter(..)</code> expression computes an
+array, on which we call <code>map</code>; we call <code>reduce</code> on the result of this
+call to obtain our final result.</p>
+<h2 id="generics-vs-the-any-type">Generics vs. the <code>Any</code> Type</h2>
+<p>Aside from generics, Swift also supports an <code>Any</code> type that can
+represent <a href="http://objc.io/fpinswift/8">values of any type</a>. On the
+surface, this may seem similar to generics. Both the <code>Any</code> type and
+generics can be used to define functions accepting different types of
+arguments. However, it is very important to understand the difference:
+generics can be used to define flexible functions, the types of which
+are still checked by the compiler; the <code>Any</code> type can be used to dodge
+Swift&#39;s type system (and should be avoided whenever possible).</p>
+<p>Let&#39;s consider the simplest possible example, which is a function that
+does nothing but return its argument. Using generics, we might write the
+following:</p>
+
+  </section>
+</div>
+</body>
+</html>

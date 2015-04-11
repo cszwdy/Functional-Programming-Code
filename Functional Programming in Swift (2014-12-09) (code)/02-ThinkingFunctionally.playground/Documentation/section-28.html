@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 29</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>This code defines two regions: <code>targetRegion</code> and <code>friendlyRegion</code>. The
+region that we&#39;re interested in is computed by taking the difference
+between these regions. By applying this region to the <code>target</code> argument,
+we can compute the desired boolean.</p>
+<p>Compared to the original <code>inRange4</code> function, the <code>inRange</code> function
+provides a more <em>declarative</em> solution to the same problem. We would
+argue that the <code>inRange</code> function is easier to understand because the
+solution is <em>compositional</em>. To understand the <code>inRange</code> function, you
+can study each of its constituent regions, such as <code>targetRegion</code> and
+<code>friendlyRegion</code>, and see how these are assembled to solve the original
+problem. The <code>inRange4</code> function, on the other hand, mixes the
+description of the constituent regions and the calculations needed to
+describe them. Separating these concerns by defining the helper
+functions we have presented previously increases the compositionality
+and legibility of complex regions.</p>
+<p>Having first-class functions is essential for this to work. Objective-C
+also supports first-class functions, or <em>blocks</em>. It can, unfortunately,
+be quite cumbersome to work with blocks. Part of this is a syntax issue:
+both the declaration of a block and the type of a block are not as
+straightforward as their Swift counterparts. In later chapters, we will
+also see how <a href="#map-filter-reduce">generics</a> make first-class functions
+even more powerful, going beyond what is easy to achieve with blocks in
+Objective-C.</p>
+<p>The way we&#39;ve defined the <code>Region</code> type does have its disadvantages. In
+particular, we cannot inspect <em>how</em> a region was constructed: Is it
+composed of smaller regions? Or is it simply a circle around the origin?
+The only thing we can do is to check whether a given point is within a
+region or not. If we would want to visualize a region, we would have to
+sample enough points to generate a (black and white) bitmap.</p>
+<p>In <a href="#diagrams">later chapters</a>, we will sketch an alternative design
+that will allow you to answer these questions.</p>
+<h2 id="type-driven-development">Type-Driven Development</h2>
+<p>In the introduction, we mentioned how functional programs take the
+application of functions to arguments as the canonical way to assemble
+bigger programs. In this chapter, we have seen a concrete example of
+this functional design methodology. We have defined a series of
+functions for describing regions. Each of these functions is not very
+powerful by itself. Yet together, they can describe complex regions that
+you wouldn&#39;t want to write from scratch.</p>
+<p>The solution is simple and elegant. It is quite different from what you
+might write, had you just refactored the <code>inRange4</code> function into
+separate methods. The crucial design decision we made was <em>how</em> to
+define regions. Once we chose the <code>Region</code> type, all the other
+definitions followed naturally. The moral of the example is <strong>choose
+your types carefully</strong>. More than anything else, types guide the
+development process.</p>
+<h2 id="notes">Notes</h2>
+<p>The code presented here is inspired by the Haskell solution to a problem
+posed by the United States Advanced Research Projects Agency (ARPA) by
+@hudak-jones.</p>
+<p>Objective-C added support for first-class functions when they introduced
+blocks: you can use functions and closures as parameters, and easily
+define them inline. However, working with them is not nearly as
+convenient in Objective-C as it is in Swift, even though they&#39;re
+semantically equivalent.</p>
+<p>Historically, the idea of first-class functions can be traced as far
+back as Church&#39;s lambda calculus [@church; @barendregt]. Since then, the
+concept has made its way into numerous (functional) programming
+languages, including Haskell, OCaml, Standard ML, Scala, and F#.</p>
+
+  </section>
+</div>
+</body>
+</html>

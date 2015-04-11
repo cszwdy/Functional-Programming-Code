@@ -1,0 +1,1 @@
+testParser(token(a) <|> token(b), "bcd")

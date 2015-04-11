@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 3</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The crucial difference is that we can assign new values to variables
+declared using <code>var</code>, whereas variables created using <code>let</code> <em>cannot</em>
+change:</p>
+<pre><code>x = 3 // This is fine
+y = 4 // This is rejected by the compiler
+</code></pre><p>We will refer to variables declared using a <code>let</code> as <em>immutable</em>
+variables; variables declared using a <code>var</code>, on the other hand, are said
+to be <em>mutable</em>.</p>
+<p>Why — you might wonder — would you ever declare an immutable variable?
+Doing so limits the variable&#39;s capabilities. A mutable variable is
+strictly more versatile. There is a clear case for preferring <code>var</code> over
+<code>let</code>. Yet in this section, we want to try and argue that the opposite
+is true.</p>
+<p>Imagine having to read through a Swift class that someone else has
+written. There are a few methods that all refer to an instance variable
+with some meaningless name, say <code>x</code>. Given the choice, would you prefer
+<code>x</code> to be declared with a <code>var</code> or a <code>let</code>? Clearly declaring <code>x</code> to be
+immutable is preferable: you can read through the code without having to
+worry about what the <em>current</em> value of <code>x</code> is, you&#39;re free to
+substitute <code>x</code> for its definition, and you cannot invalidate <code>x</code> by
+assigning it some value that might break invariants on which the rest of
+the class relies.</p>
+<p>Immutable variables may not be assigned a new value. As a result, it is
+<em>easier</em> to reason about immutable variables. In his famous paper, &quot;Go
+To Statement Considered Harmful,&quot; Edgar Dijkstra writes:</p>
+<blockquote>
+<p>My... remark is that our intellectual powers are rather geared to
+master static relations and that our powers to visualize processes
+evolving in time are relatively poorly developed.</p>
+</blockquote>
+<p>Dijkstra goes on to argue that the mental model a programmer needs to
+develop when reading through structured code (using conditionals, loops,
+and function calls, but not goto statements) is simpler than spaghetti
+code full of gotos. We can take this discipline even further and eschew
+the use of mutable variables: <code>var</code> considered harmful.</p>
+<h2 id="value-types-vs-reference-types">Value Types vs. Reference Types</h2>
+<p>The careful treatment of mutability is not present only in variable
+declarations. Swift distinguishes between <em>value</em> types and <em>reference</em>
+types. The canonical examples of value and reference types are structs
+and classes, respectively. To illustrate the difference between value
+types and reference types, we will define the following struct:</p>
+
+  </section>
+</div>
+</body>
+</html>

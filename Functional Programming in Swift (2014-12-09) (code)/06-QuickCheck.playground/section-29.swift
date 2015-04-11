@@ -1,0 +1,1 @@
+check1("Area should be at least 0") { size in area(size) >= 0 }

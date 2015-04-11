@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 27</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The resulting generator simply reads off new elements from its <code>first</code>
+argument generator; once this is exhausted, it produces elements from
+its <code>second</code> generator. Once both generators have returned <code>nil</code>, the
+composite generator also returns <code>nil</code>.</p>
+<h2 id="sequences">Sequences</h2>
+<p>Generators form the basis of another Swift protocol, <em>sequences</em>.
+Generators provide a &#39;one-shot&#39; mechanism for repeatedly computing a
+next element. There is no way to rewind or replay the elements
+generated. The only thing we can do is create a fresh generator and use
+that instead. The <code>SequenceType</code> protocol provides just the right
+interface for doing that:</p>
+<pre><code>protocol SequenceType {
+    typealias Generator: GeneratorType
+    func generate() -&gt; Generator
+}
+</code></pre><p>Every sequence has an associated generator type and a method to create a
+new generator. We can then use this generator to traverse the sequence.
+For example, we can use our <code>CountdownGenerator</code> to define a sequence
+that generates a series of array indexes in back-to-front order:</p>
+
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+findPower { $0.integerValue > 1000 }

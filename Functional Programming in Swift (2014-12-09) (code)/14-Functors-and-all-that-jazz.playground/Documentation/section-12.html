@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 13</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>pure</code> function wraps a value into an optional. This is usually
+handled implicitly by the Swift compiler, so it&#39;s not very useful to
+define ourselves. The <code>&lt;*&gt;</code> operator is more interesting: given a
+(possibly <code>nil</code>) function and a (possibly <code>nil</code>) argument, it returns
+the result of applying the function to the argument when both exist. If
+either argument is <code>nil</code>, the whole function returns <code>nil</code>. We can give
+similar definitions for <code>pure</code> and <code>&lt;*&gt;</code> for the <code>Result</code> type from
+<a href="#enumerations">Chapter 8</a>.</p>
+<p>By themselves, these definitions may not be very interesting, so let&#39;s
+revisit some of our previous examples. You may want to recall the
+<code>addOptionals</code> function, which tried to add two possibly <code>nil</code> integers:</p>
+<pre><code>func addOptionals(maybeX: Int?, maybeY: Int?) -&gt; Int? {
+    if let x = maybeX {
+        if let y = maybeY {
+            return x + y
+        }
+    }
+    return nil
+}
+</code></pre><p>Using the definitions above, we can give a short and sweet alternative
+definition of <code>addOptionals</code>:</p>
+
+  </section>
+</div>
+</body>
+</html>

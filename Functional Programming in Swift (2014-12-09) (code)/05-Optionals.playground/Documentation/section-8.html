@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 9</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>If the lookup, <code>cities[&quot;Madrid&quot;]</code>, is successful, we can use the
+variable <code>madridPopulation: Int</code> in the then-branch. Note that we no
+longer need to explicitly use the forced unwrapping operator.</p>
+<p>Given the choice, we&#39;d recommend using optional binding over forced
+unwrapping. Forced unwrapping may crash if you have a <code>nil</code> value;
+optional binding encourages you to handle exceptional cases explicitly,
+thereby avoiding runtime errors. Unchecked usage of the forced
+unwrapping of optional types or Swift&#39;s <a href="http://objc.io/fpinswift/9">implicitly unwrapped
+optionals</a> can be a bad code smell,
+indicating the possibility of runtime errors.</p>
+<p>Swift also provides a safer alternative to the <code>!</code> operator, which
+requires an additional default value to return when applied to <code>nil</code>.
+Roughly speaking, it can be defined as follows:</p>
+<pre><code>infix operator ?? 
+
+func ??&lt;T&gt;(optional: T?, defaultValue: T) -&gt; T {
+    if let x = optional {
+        return x
+    } else {
+        return defaultValue
+    }
+}
+</code></pre><p>The <code>??</code> operator checks whether or not its optional argument is <code>nil</code>.
+If it is, it returns its <code>defaultValue</code> argument; otherwise, it returns
+the optional&#39;s underlying value.</p>
+<p>There is one problem with this definition: the <code>defaultValue</code> may be
+evaluated, regardless of whether or not the optional is <code>nil</code>. This is
+usually undesirable behavior: an if-then-else statement should only
+execute <em>one</em> of its branches, depending on whether or not the
+associated condition is true. Similarly, the <code>??</code> operator should only
+evaluate the <code>defaultValue</code> argument when the optional argument is
+<code>nil</code>. As an illustration, suppose we were to call <code>??</code>, as follows:</p>
+<pre><code>optional ?? defaultValue
+</code></pre><p>In this example, we really do not want to evaluate <code>defaultValue</code> if the
+<code>optional</code> variable is non-nil — it could be a very expensive
+computation that we only want to run if it is absolutely necessary. We
+can resolve this issue as follows:</p>
+<pre><code>func ??&lt;T&gt;(optional: T?, defaultValue: () -&gt; T) -&gt; T {
+    if let x = optional {
+        return x
+    } else {
+        return defaultValue()
+    }
+}
+</code></pre><p>Instead of providing a default value of type <code>T</code>, we now provide one of
+type <code>() -&gt; T</code>. The code in the <code>defaultValue</code> closure is now only
+executed when we pass it its (void) argument. In this definition, this
+code is only executed in the else branch, as we intended. The only
+drawback is that when calling the <code>??</code> operator, we need to create an
+explicit closure for the default value. For example, we would need to
+write:</p>
+<pre><code>myOptional ?? { myDefaultValue }
+</code></pre><p>The definition in the Swift standard library avoids the need for
+creating explicit closures by using Swift&#39;s <a href="http://objc.io/fpinswift/10"><code>autoclosure</code> type
+attribute</a>. This implicitly wraps any
+arguments to the <code>??</code> operator in the required closure. As a result, we
+can provide the same interface that we initially had, but without
+requiring the user to create an explicit closure wrapping the
+<code>defaultValue</code> argument. The actual definition used in Swift&#39;s standard
+library is as follows:</p>
+<pre><code>infix operator ?? { associativity right precedence 110 }
+
+func ??&lt;T&gt;(optional: T?, 
+           defaultValue: @autoclosure () -&gt; T) -&gt; T {
+
+    if let x = optional {
+        return x
+    } else {
+        return defaultValue()
+    }
+}
+</code></pre><p>The <code>??</code> provides a safer alternative to the forced optional unwrapping,
+without being as verbose as the optional binding.</p>
+<h2 id="combining-optional-values">Combining Optional Values</h2>
+<p>Swift&#39;s optional values make the possibility of failure explicit. This
+can be cumbersome, especially when combining multiple optional results.
+There are several techniques to facilitate the use of optionals.</p>
+<h3 id="optional-chaining">Optional Chaining</h3>
+<p>First of all, Swift has a special mechanism, <em>optional chaining</em>, for
+selecting methods or attributes in nested classes or structs. Consider
+the following (fragment of a) model for processing customer orders:</p>
+<pre><code>struct Order {
+    let orderNumber: Int
+    let person: Person?
+    // ...
+}
+
+struct Person {
+    let name: String
+    let address: Address?
+    // ...
+}
+
+struct Address {
+    let streetName: String
+    let city: String
+    let state: String?
+    // ...
+}
+</code></pre><p>Given an <code>Order</code>, how can we find the state of the customer? We could
+use the explicit unwrapping operator:</p>
+<pre><code>order.person!.address!.state!
+</code></pre><p>Doing so, however, may cause runtime exceptions if any of the
+intermediate data is missing. It would be much safer to use optional
+binding:</p>
+<pre><code>if let myPerson = order.person in {
+    if let myAddress = myPerson.address in {
+        if let myState = myAddress.state in {
+            // ...
+</code></pre><p>But this is rather verbose. Using optional chaining, this example would
+become:</p>
+<pre><code>if let myState = order.person?.address?.state? {
+    print(&quot;This order will be shipped to \(myState\)&quot;)
+} else {
+    print(&quot;Unknown person, address, or state.&quot;)
+}
+</code></pre><p>Instead of forcing the unwrapping of intermediate types, we use the
+question mark operator to try and unwrap the optional types. When any of
+the component selections fails, the whole chain of selection statements
+returns <code>nil</code>.</p>
+<h3 id="maps-and-more">Maps and More</h3>
+<p>The <code>?</code> operator lets us select methods or fields of optional values.
+There are plenty of other examples, however, where you may want to
+manipulate an optional value, if it exists, and return <code>nil</code> otherwise.
+Consider the following example:</p>
+
+  </section>
+</div>
+</body>
+</html>

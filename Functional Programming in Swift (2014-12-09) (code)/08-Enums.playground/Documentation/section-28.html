@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 29</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>Box</code> class does not serve any particular purpose, except to hide
+the associated generic value <code>T</code> in the <code>Success</code> member.</p>
+<p>Now we can use the same result type for both <code>readFile</code> and <code>writeFile</code>.
+Their new type signatures would become:</p>
+<pre><code>func readFile(path: String, encoding: Encoding) -&gt; Result&lt;String&gt;
+func writeFile(contents: String, 
+               path: String, encoding: Encoding) -&gt; Result&lt;()&gt;
+</code></pre><p>The <code>readFile</code> function returns either a <code>String</code> or an <code>NSError</code>; the
+<code>writeFile</code> function returns nothing, represented by the void type <code>()</code>
+or an <code>NSError</code>.</p>
+<h2 id="optionals-revisited">Optionals Revisited</h2>
+<p>Under the hood, Swift&#39;s built-in optional type is very similar to the
+<code>Result</code> type that we&#39;ve defined here. The following snippet is taken
+almost directly from the Swift standard library:</p>
+<pre><code>enum Optional&lt;T&gt; {
+    case None
+    case Some(T)
+    // ...
+}
+</code></pre><p>The optional type just provides some syntactic sugar, such as the
+postfix <code>?</code> notation and optional unwrapping mechanism, to make it
+easier to use. There is, however, no reason that you couldn&#39;t define it
+yourself.</p>
+<p>In fact, we can even define some of the library functions for
+manipulating optionals on our own <code>Result</code> type. For example, our
+<code>Result</code> type also supports a <code>map</code> operation:</p>
+
+  </section>
+</div>
+</body>
+</html>

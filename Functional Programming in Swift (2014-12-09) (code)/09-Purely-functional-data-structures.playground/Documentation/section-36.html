@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 37</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Here we can distinguish three cases:</p>
+<ul>
+<li>The key is non-empty — in this case, we look up the subtrie
+corresponding to the first element of the key. If this also exists,
+we make a recursive call, looking up the tail of the key in this
+subtrie.</li>
+<li>The key is non-empty, but the corresponding subtrie does not exist —
+in this case, we simply return false, as the key is not included in
+the trie.</li>
+<li>The key is empty — in this case, we return <code>isElem</code>, the boolean
+indicating whether or not the string described by the current node
+is in the trie or not.</li>
+</ul>
+<p>We can adapt <code>lookup</code> to return the subtrie, containing all the elements
+that have some prefix:</p>
+
+  </section>
+</div>
+</body>
+</html>

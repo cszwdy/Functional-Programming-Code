@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 5</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h1 id="generators-and-sequences">Generators and Sequences</h1>
+<p>In this chapter, we&#39;ll look at generators and sequences. These form the
+machinery underlying Swift&#39;s for loops, and will be the basis of the
+parsing library that we will present in the following chapters.</p>
+<h2 id="generators">Generators</h2>
+<p>In Objective-C and Swift, we almost always use the <code>Array</code> datatype to
+represent a list of items. It is both simple and fast. There are
+situations, however, where arrays are not suitable. For example, you
+might not want to calculate all the elements of an array, because there
+is an infinite amount, or you don’t expect to use them all. In such
+situations, you may want to use a <em>generator</em> instead.</p>
+<p>We will try to provide some motivation for generators, using familiar
+examples from array computations. Swift&#39;s for loops can be used to
+iterate over array elements:</p>
+<pre><code>for x in xs {
+    // do something with x
+}
+</code></pre><p>In such a for loop, the array is traversed from beginning to end. There
+may be examples, however, where you want to traverse arrays in a
+different order. This is where generators may be useful.</p>
+<p>Conceptually, a generator is a &#39;process&#39; that generates new array
+elements on request. A generator is any type that adheres to the
+following protocol:</p>
+<pre><code>protocol GeneratorType {
+    typealias Element
+    func next() -&gt; Element?
+}
+</code></pre><p>This protocol requires an <em>associated type</em>, <code>Element</code>, defined by the
+<code>GeneratorType</code>. There is a single method, <code>next</code>, that produces the
+next element if it exists, and <code>nil</code> otherwise.</p>
+<p>For example, the following generator produces array indices, starting
+from the end of an array until it reaches 0:</p>
+
+  </section>
+</div>
+</body>
+</html>

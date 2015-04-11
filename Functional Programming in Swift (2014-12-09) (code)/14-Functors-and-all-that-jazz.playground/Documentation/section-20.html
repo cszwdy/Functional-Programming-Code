@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 21</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>&gt;&gt;=</code> operator allows us to take an element <code>x</code> from the first
+array, <code>xs</code>; next, we take an element <code>y</code> from <code>ys</code>. For each pair of
+<code>x</code> and <code>y</code>, we return the array <code>[(x, y)]</code>. The <code>&gt;&gt;=</code> operator handles
+combining all these arrays into one large result.</p>
+<p>While this example may seem a bit contrived, the <code>&gt;&gt;=</code> operator on
+arrays has many important applications. Languages like Haskell and
+Python support special syntactic sugar for defining lists, called <em>list
+comprehensions</em>. These list comprehensions allow you to draw elements
+from existing lists and check that these elements satisfy certain
+properties. They can all be desugared into a combination of maps,
+filters, and <code>&gt;&gt;=</code>.</p>
+<h2 id="discussion">Discussion</h2>
+<p>Why care about these things? Does it really matter if you know that some
+type is an applicative functor or a monad? We think it does.</p>
+<p>Consider the parser combinators from <a href="#parser-combinators">Chapter 12</a>.
+Defining the correct way to sequence two parsers is not easy: it
+requires a bit of insight into how parsers work. Yet it is an absolutely
+essential piece of our library, without which we could not even write
+the simplest parsers. If you have the insight that our parsers form an
+applicative functor, you may realize that the existing <code>&lt;*&gt;</code> provides
+you with exactly the right notion of sequencing two parsers, one after
+the other. Knowing what abstract operations your types support can help
+you find such complex definitions.</p>
+<p>Abstract notions, like functors, provide important vocabulary. If you
+ever encounter a function named <code>map</code>, you can probably make a pretty
+good guess as to what it does. Without a precise terminology for common
+structures like functors, you would have to rediscover each new <code>map</code>
+function from scratch.</p>
+<p>These structures give guidance when designing your own API. If you
+define a generic enumeration or struct, chances are that it supports a
+<code>map</code> operation. Is this something that you want to expose to your
+users? Is your data structure also an applicative functor? Is it a
+monad? What do the operations do? Once you familiarize yourself with
+these abstract structures, you see them pop up again and again.</p>
+<p>Although it is harder in Swift than in Haskell, you can define generic
+functions that work on any applicative functor. Functions such as the
+<code>&lt;/&gt;</code> operator on parsers were defined exclusively in terms of the
+applicative <code>pure</code> and <code>&lt;*&gt;</code> functions. As a result, we may want to
+redefine them for <em>other</em> applicative functors aside from parsers. In
+this way, we recognize common patterns in how we program using these
+abstract structures; these patterns may themselves be useful in a wide
+variety of settings.</p>
+<p>The historical development of monads in the context of functional
+programming is interesting. Initially, monads were developed in a branch
+of Mathematics known as <em>category theory</em>. The discovery of their
+relevance to Computer Science is generally attributed to @moggi and
+later popularized by Wadler [-@wadler-monads-1; -@wadler-monads-2].
+Since then, they have been used by functional languages such as Haskell
+to contain side effects and I/O [@spj]. Applicative functors were first
+described by McBride and Paterson [-@mcbride-paterson], although there
+were many examples already known. A complete overview of the relation
+between many of the abstract concepts described in this chapter can be
+found in the Typeclassopedia [@yorgey-typeclassopedia].</p>
+
+  </section>
+</div>
+</body>
+</html>

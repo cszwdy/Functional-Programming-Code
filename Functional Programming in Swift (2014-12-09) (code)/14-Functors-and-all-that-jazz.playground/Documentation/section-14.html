@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 15</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Once you understand the control flow that operators like <code>&lt;*&gt;</code>
+encapsulate, it becomes much easier to assemble complex computations in
+this fashion.</p>
+<p>There is one other example from the optionals chapter that we would like
+to revisit:</p>
+<pre><code>func populationOfCapital(country: String) -&gt; Int? {
+    if let capital = capitals[country] {
+        if let population = cities[capital] {
+            return population * 1000
+        }
+    }
+    return nil
+}
+</code></pre><p>Here we consulted one dictionary, <code>capitals</code>, to retrieve the capital
+city of a given country. We then consulted another dictionary, <code>cities</code>,
+to determine each city&#39;s population. Despite the obvious similarity to
+the previous <code>addOptionals</code> example, this function <em>cannot</em> be written
+in applicative style. Here is what happens when we try to do so:</p>
+<pre><code>func populationOfCapital(country: String) -&gt; Int? {
+    return { pop in pop * 1000 } &lt;*&gt; capitals[country] &lt;*&gt; cities[...]
+}
+</code></pre><p>The problem is that the <em>result</em> of the first lookup, which was bound to
+the <code>capital</code> variable in the original version, is needed in the second
+lookup. Using only the applicative operations, we quickly get stuck:
+there is no way for the result of one applicative computation
+(<code>capitals[country]</code>) to influence another (the lookup in the <code>cities</code>
+dictionary). To deal with this, we need yet another interface.</p>
+<h2 id="the-m-word">The M-Word</h2>
+<p>In <a href="#optionals">Chapter 5</a>, we gave the following alternative definition
+of <code>populationOfCapital</code>:</p>
+<pre><code>func populationOfCapital2 (country : String) -&gt; Int? {
+    return capitals[country] &gt;&gt;= { capital in
+        cities[capital] &gt;&gt;= { population in
+           return population * 1000
+       }
+   }
+}
+</code></pre><p>Here we used a custom operator, <code>&gt;&gt;=</code>, to combine optional computations:</p>
+<pre><code>infix operator &gt;&gt;= {}
+
+func &gt;&gt;=&lt;U, T&gt;(optional: T?, f: T -&gt; U?) -&gt; U? {
+    if let x = optional {
+        return f(x)
+    } else {
+        return nil
+    }
+}
+</code></pre><p>How is this different from the applicative interface? The types are
+subtly different. In the applicative <code>&lt;*&gt;</code> operation, <em>both</em> arguments
+are optionals. In the <code>&gt;&gt;=</code> operator, on the other hand, the second
+argument is a <em>function</em> that returns an optional value. Consequently,
+we can pass the result of the first dictionary lookup on to the second.</p>
+<p>The <code>&gt;&gt;=</code> operator is impossible to define in terms of the applicative
+functions. In fact, the <code>&gt;&gt;=</code> operator is one of the two functions
+supported by <em>monads</em>. More generally, a type constructor <code>F</code> is a monad
+if it defines the following two functions:</p>
+<pre><code>func pure&lt;A&gt;(value: A) -&gt; F&lt;A&gt;
+
+func &gt;&gt;=&lt;A, B&gt;(x: F&lt;A&gt;, f: A -&gt; F&lt;B&gt;) -&gt; F&lt;B&gt;
+</code></pre><p>The <code>&gt;&gt;=</code> operator is sometimes pronounced &quot;bind,&quot; as it binds the
+result of the first argument to the parameter of its second argument.</p>
+<p>In addition to Swift&#39;s optional type, the <code>Result</code> enumeration defined
+in <a href="#enumerations">Chapter 8</a> is also a monad. This insight makes it
+possible to chain together computations that may return an <code>NSError</code>.
+For example, we could define a function that copies the contents of one
+file to another, as follows:</p>
+<pre><code>func copyFile(sourcePath: String, targetPath: String, 
+              encoding: Encoding) -&gt; Result&lt;()&gt; {
+
+    return readFile(sourcePath, encoding) &gt;&gt;= { contents in
+        writeFile(contents, targetPath, encoding)
+    }
+}
+</code></pre><p>If the call to either <code>readFile</code> or <code>writeFile</code> fails, the <code>NSError</code>
+will be logged in the result. This may not be quite as nice as Swift&#39;s
+optional binding mechanism, but it is still pretty close.</p>
+<p>There are many other applications of monads aside from handling errors.
+For example, arrays are also a monad:</p>
+
+  </section>
+</div>
+</body>
+</html>

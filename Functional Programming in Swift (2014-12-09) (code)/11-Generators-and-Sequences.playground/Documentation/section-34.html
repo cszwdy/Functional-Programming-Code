@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 35</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Under the hood, Swift then uses the <code>generate</code> method to produce a
+generator and repeatedly call its <code>next</code> function until it produces
+<code>nil</code>.</p>
+<p>The obvious drawback of our <code>CountdownGenerator</code> is that it produces
+numbers, while we may be interested in the <em>elements</em> associated with an
+array. Fortunately, there are standard <code>map</code> and <code>filter</code> functions that
+manipulate sequences rather than arrays:</p>
+<pre><code>func filter&lt;S: SequenceType&gt;(source: S, 
+                    includeElement: S.Generator.Element -&gt; Bool) 
+                    -&gt; [S.Generator.Element]
+
+func map&lt;S: SequenceType, T&gt;(source: S, 
+                             transform: S.Generator.Element -&gt; T) 
+                             -&gt; [T]
+</code></pre><p>To produce the <em>elements</em> of an array in reverse order, we can <code>map</code>
+over our <code>ReverseSequence</code>:</p>
+
+  </section>
+</div>
+</body>
+</html>

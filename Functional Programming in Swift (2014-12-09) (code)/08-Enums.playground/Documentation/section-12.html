@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 13</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>readFile1</code> function returns an optional string. It simply calls the
+initializer, passing the address for an <code>NSError</code> object. If the call to
+the initializer succeeds, the resulting string is returned; upon
+failure, the whole function returns <code>nil</code>.</p>
+<p>This interface is a bit more precise than Objective-C&#39;s
+<code>stringWithContentsOfFile</code> — from the type alone, it is clear that this
+function may fail. There is no temptation for developers to pass null
+pointers for the <code>error</code> argument, ignoring the possibility of failure.</p>
+<p>There is one drawback to using Swift&#39;s optional type: we no longer
+return the error message when the file cannot be read. This is rather
+unfortunate — if a call to <code>readFile1</code> fails, there is no way to
+diagnose what went wrong. Does the file not exist? Is it corrupt? Or do
+you not have the right permissions?</p>
+<p>Ideally, we would like our <code>readFile</code> function to return <em>either</em> a
+<code>String</code> <em>or</em> an <code>NSError</code>. Using Swift&#39;s enumerations, we can do just
+that. Instead of returning a <code>String?</code>, we will redefine our <code>readFile</code>
+function to return a member of the <code>ReadFileResult</code> enumeration. We can
+define this enumeration as follows:</p>
+
+  </section>
+</div>
+</body>
+</html>

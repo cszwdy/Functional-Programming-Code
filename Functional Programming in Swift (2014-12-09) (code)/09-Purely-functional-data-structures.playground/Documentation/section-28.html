@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 29</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>This function is a bit tricky. It starts by checking if the current root
+is marked as a member of the trie or not. If it is, the trie contains
+the empty key; if it is not, the <code>result</code> variable is initialized to the
+empty array. Next, it traverses the dictionary, computing the elements
+of the subtries — this is done by the call <code>elements(value)</code>. Finally,
+the &#39;character&#39; associated with every subtrie is added to the front of
+the elements of that subtrie — this is taken care of by the <code>map</code>
+function.</p>
+<p>Next, we would like to define lookup and insertion functions. Before we
+do so, however, we will need a few auxiliary functions. We have
+represented keys as an array. While our tries are defined as (recursive)
+structs, arrays are not. Yet it can still be useful to traverse an array
+recursively. To make this a bit easier, we define the following
+extension on arrays:</p>
+
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 19</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The call <code>shift(offset, region)</code> moves the region to the right and up by
+<code>offet.x</code> and <code>offset.y</code>, respectively. We need to return a <code>Region</code>,
+which is a function from a point to a boolean value. To do this, we
+start writing another closure, introducing the point we need to check.
+From this point, we compute a new point with the coordinates
+<code>point.x - offset.x</code> and <code>point.y - offset.y</code>. Finally, we check that
+this new point is in the <em>original</em> region by passing it as an argument
+to the <code>region</code> function.</p>
+<p>This is one of the core concepts of functional programming: rather than
+creating increasingly complicated functions such as <code>circle2</code>, we have
+written a function, <code>shift</code>, that modifies another function. For
+example, a circle that&#39;s centered at <code>(5, 5)</code> and has a radius of <code>10</code>
+can now be expressed like this:</p>
+
+  </section>
+</div>
+</body>
+</html>

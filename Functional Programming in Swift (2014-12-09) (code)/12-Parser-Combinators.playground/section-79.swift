@@ -1,0 +1,1 @@
+testParser(zeroOrMore(decimalDigit), "12345")

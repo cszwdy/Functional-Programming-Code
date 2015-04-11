@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 31</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Although this method mostly avoids using mutable references, it does not
+run in constant memory. It allocates new arrays, <code>lesser</code> and <code>greater</code>,
+which are combined to produce the final result. Of course, by using a
+mutable array, we can define a version of Quicksort that runs in
+constant memory and is still referentially transparent. Clever usage of
+mutable variables can sometimes improve performance or memory usage.</p>
+<p>In summary, Swift offers several language features specifically designed
+to control the usage of mutable state in your program. It is almost
+impossible to avoid mutable state altogether, but mutation is used
+excessively and unnecessarily in many programs. Learning to avoid
+mutable state and objects whenever possible can help reduce coupling,
+thereby improving the structure of your code.</p>
+
+  </section>
+</div>
+</body>
+</html>

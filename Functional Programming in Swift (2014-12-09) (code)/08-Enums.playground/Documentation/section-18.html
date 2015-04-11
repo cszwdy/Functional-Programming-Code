@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 19</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Instead of returning an optional <code>String</code>, we now return either the file
+contents or an <code>NSError</code>. We first check if the string is non-<code>nil</code> and
+return the value. If the string was <code>nil</code>, we check if there was an
+error opening the file and, if so, return a <code>Failure</code>. Finally, if both
+<code>maybeError</code> and <code>maybeString</code> are <code>nil</code> after the call to the
+initializer, something is very wrong indeed — we assert <code>false</code> and
+should try to give a meaningful error message.</p>
+<p>Upon calling <code>readFile</code>, you can use a switch statement to determine
+whether or not the function succeeded:</p>
+
+  </section>
+</div>
+</body>
+</html>

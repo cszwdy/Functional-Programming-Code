@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 21</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>setContains</code> function now distinguishes four possible cases:</p>
+<ul>
+<li>If the <code>tree</code> is empty, the <code>x</code> is not in the tree and we return
+false.</li>
+<li>If the <code>tree</code> is non-empty and the value stored at its root is equal
+to <code>x</code>, we return true.</li>
+<li>If the <code>tree</code> is non-empty and the value stored at its root is
+greater than <code>x</code>, we know that if <code>x</code> is in the tree, it must be in
+the left subtree. Hence, we recursively search for <code>x</code> in the left
+subtree.</li>
+<li>Similarly, if <code>x</code> is greater than the value stored at the root, we
+proceed by searching the right subtree.</li>
+</ul>
+<p>Unfortunately, the Swift compiler is not clever enough to see that these
+four cases cover all the possibilities, so we need to insert a dummy
+default case.</p>
+<p>Insertion searches through the binary search tree in exactly the same
+fashion:</p>
+
+  </section>
+</div>
+</body>
+</html>

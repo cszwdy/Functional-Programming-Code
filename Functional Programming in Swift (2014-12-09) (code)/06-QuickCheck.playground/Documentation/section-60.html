@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 61</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h2 id="using-quickcheck">Using QuickCheck</h2>
+<p>Somewhat counterintuitively, there is strong evidence to suggest that
+testing technology influences the design of your code. People who rely
+on <em>test-driven design</em> use tests not only to verify that their code is
+correct. Instead, they also report that by writing your code in a
+test-driven fashion, the design of the code gets simpler. This makes
+sense — if it is easy to write a test for a class without having a
+complicated setup procedure, it means that the class is nicely
+decoupled.</p>
+<p>For QuickCheck, the same rules apply. It will often not be easy to take
+existing code and add QuickCheck tests as an afterthought, particularly
+when you have an existing object-oriented architecture that relies
+heavily on other classes or makes use of mutable state. However, if you
+start by doing test-driven development using QuickCheck, you will see
+that it strongly influences the design of your code. QuickCheck forces
+you to think of the abstract properties that your functions must satisfy
+and allows you to give a high-level specification. A unit test can
+assert that <code>3 + 0</code> is equal to <code>0 + 3</code>; a QuickCheck property states
+more generally that addition is a commutative operation. By thinking
+about a high-level QuickCheck specification first, your code is more
+likely to be biased toward modularity and <em>referential transparency</em>
+(which we will cover in the <a href="#the-value-of-immutability">next chapter</a>).
+QuickCheck does not work as well on stateful functions or APIs. As a
+result, writing your tests up front with QuickCheck will help keep your
+code clean.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>This library is far from complete, but already quite useful. That said,
+there are a couple of obvious things that could be improved upon:</p>
+<ul>
+<li>The shrinking is naive. For example, in the case of arrays, we
+currently remove the first element of the array. However, we might
+also choose to remove a different element, or make the elements of
+the array smaller (or do all of that). The current implementation
+returns an optional shrunken value, whereas we might want to
+generate a list of values. In a <a href="#generators-and-sequences">later
+chapter</a>, we will see how to generate a
+lazy list of results, and we could use that same technique here.</li>
+<li>The <code>Arbitrary</code> instances are quite simple. For different data
+types, we might want to have more complicated arbitrary instances.
+For example, when generating arbitrary enum values, we could
+generate certain cases with different frequencies. We could also
+generate constrained values, such as sorted or non-empty arrays.
+When writing multiple <code>Arbitrary</code> instances, it&#39;s possible to define
+some helper functions that aid us in writing these instances.</li>
+<li>Classify the generated test data: if we generate a lot of arrays of
+length one, we could classify this as a &#39;trivial&#39; test case. The
+Haskell library has support for classification, so these ideas could
+be ported directly.</li>
+<li>We might want better control of the size of the random input that is
+generated. In the Haskell version of QuickCheck, the <code>Arbitrary</code>
+protocol takes an additional size argument, limiting the size of the
+random input generated; the <code>check</code> function than starts testing
+&#39;small&#39; values, which correspond to small and fast tests. As more
+and more tests pass, the <code>check</code> function increases the size to try
+and find larger, more complicated counterexamples.</li>
+<li>We might also want to initialize the random generator with an
+explicit seed, and make it possible to replay the generation of test
+cases. This will make it easier to reproduce failing tests.</li>
+</ul>
+<p>Obviously, that&#39;s not everything; there are many other small and large
+things that could be improved upon to make this into a full library.</p>
+
+  </section>
+</div>
+</body>
+</html>

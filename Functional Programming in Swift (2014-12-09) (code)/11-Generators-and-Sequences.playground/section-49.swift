@@ -1,0 +1,1 @@
+Array(removeElement([1, 2, 3]))

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 5</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>We have chosen to restrict ourselves to the first four possibilities
+defined in the <code>NSStringEncoding</code> enumeration listed above — there are
+many common encodings that we have not incorporated in this definition.
+This Swift enumeration declaration is for the purpose of illustration
+only. The <code>Encoding</code> type is inhabited by four possible values: <code>ASCII</code>,
+<code>NEXTSTEP</code>, <code>JapaneseEUC</code>, and <code>UTF8</code>. We will refer to the possible
+values of an enumeration as <em>member values</em>, or <em>members</em> for short. In
+a great deal of literature, such enumerations are sometimes called <em>sum
+types</em>. Throughout this book, however, we will use Apple&#39;s terminology.</p>
+<p>In contrast to Objective-C, the following code is <em>not</em> accepted by the
+compiler:</p>
+<pre><code>let myEncoding = Encoding.ASCII + Encoding.UTF8
+</code></pre><p>Unlike Objective-C, enumerations in Swift create new types, distinct
+from integers or other existing types.</p>
+<p>We can define functions that calculate with encodings using <code>switch</code>
+statements. For example, we may want to compute the <code>NSStringEncoding</code>
+corresponding to our encoding enumeration:</p>
+
+  </section>
+</div>
+</body>
+</html>

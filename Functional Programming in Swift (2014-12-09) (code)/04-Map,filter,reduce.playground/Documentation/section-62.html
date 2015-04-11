@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 63</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The type of this function is so generic that it completely determines
+how the <em>function itself</em> is defined. We&#39;ll try to give an informal
+argument here. We need to produce a value of type <code>C</code>. As there is
+nothing else we know about <code>C</code>, there is no value that we can return
+immediately. If we knew that <code>C</code> was some concrete type, like <code>Int</code> or
+<code>Bool</code>, we could potentially return a value of that type, such as <code>5</code> or
+<code>True</code>, respectively. As our function must work <em>for any</em> type <code>C</code>, we
+cannot do so. The only argument to the <code>&gt;&gt;&gt;</code> operator that refers to <code>C</code>
+is the function <code>g : B -&gt; C</code>. Therefore, the only way to get our hands
+on a value of type <code>C</code> is by applying the function <code>g</code> to a value of
+type <code>B</code>.</p>
+<p>Similarly, the only way to produce a <code>B</code> is by applying <code>f</code> to a value
+of type <code>A</code>. The only value of type <code>A</code> that we have is the final
+argument to our operator. Therefore, this definition of function
+composition is the only possible function that has this generic type.</p>
+<p>In the same way, we can define a generic function that curries any
+function expecting a tuple of two arguments, thereby producing the
+corresponding curried version:</p>
+
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 23</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>The <code>writeFile</code> function now returns a boolean, indicating whether or
+not the operation succeeded. Unfortunately, this definition suffers from
+the same limitations as our earlier version of <code>readFile</code>: when
+<code>writeFile</code> fails, we are not returning the <code>NSError</code>.</p>
+<p>But we now know how to solve this! Our first approach might be to reuse
+the <code>ReadFileResult</code> enumeration to return the error. When <code>writeFile</code>
+succeeds, however, we do not have a string to associate with the
+<code>Success</code> member value. While we could pass some dummy string, doing so
+usually indicates bad design: our types should be precise enough to
+prevent us from having to work with such dummy values.</p>
+<p>Alternatively, we can define a new enumeration, <code>WriteFileResult</code>,
+corresponding to the two possible cases:</p>
+
+  </section>
+</div>
+</body>
+</html>

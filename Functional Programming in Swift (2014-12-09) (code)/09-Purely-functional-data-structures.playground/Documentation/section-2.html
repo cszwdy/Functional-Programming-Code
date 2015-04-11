@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 3</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h1 id="purely-functional-data-structures">Purely Functional Data Structures</h1>
+<p>In the previous chapter, we saw how to use enumerations to define
+specific types tailored to the application you are developing. In this
+chapter, we will define <em>recursive</em> enumerations and show how these can
+be used to define data structures that are both efficient and
+persistent.</p>
+<h2 id="binary-search-trees">Binary Search Trees</h2>
+<p>Swift does not have a library for manipulating sets, like Objective-C&#39;s
+<code>NSSet</code> library. While we could write a Swift wrapper around <code>NSSet</code>,
+like we did for Core Image and the <code>String</code> initializer, we will explore
+a slightly different approach. Our aim is, once again, not to define a
+complete library for manipulating sets in Swift, but rather to
+demonstrate how recursive enumerations can be used to define efficient
+data structures.</p>
+<p>In our little library, we will implement the following four operations:</p>
+<ul>
+<li><code>emptySet</code> — returns an empty set</li>
+<li><code>isEmptySet</code> — checks whether or not a set is empty</li>
+<li><code>setContains</code> — checks whether or not an element is in a set</li>
+<li><code>setInsert</code> — adds an element to an existing set</li>
+</ul>
+<p>As a first attempt, we may use arrays to represent sets. These four
+operations are almost trivial to implement:</p>
+
+  </section>
+</div>
+</body>
+</html>

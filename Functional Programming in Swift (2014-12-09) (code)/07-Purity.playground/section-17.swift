@@ -1,0 +1,1 @@
+var classOrigin = setClassToOrigin(classPoint)

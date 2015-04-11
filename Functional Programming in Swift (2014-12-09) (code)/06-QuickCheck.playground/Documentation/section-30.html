@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 31</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Here we can see a good example of when QuickCheck can be very useful: it
+finds an edge case for us. If a size has exactly one negative component,
+our <code>area</code> function will return a negative number. When used as part of
+a <code>CGRect</code>, a <code>CGSize</code> can have negative values. When writing ordinary
+unit tests, it is easy to oversee this case, because sizes usually only
+have positive components. (The <code>CGSize</code> instances are omitted in this
+chapter, but can be found in the <a href="#additional-code">appendix</a>.)</p>
+<h2 id="making-values-smaller">Making Values Smaller</h2>
+<p>If we run our <code>check1</code> function on strings, we might receive a rather
+long failure message:</p>
+
+  </section>
+</div>
+</body>
+</html>

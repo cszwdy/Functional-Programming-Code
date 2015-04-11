@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 33</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h2 id="the-algebra-of-data-types">The Algebra of Data Types</h2>
+<p>As we mentioned previously, enumerations are often referred to as sum
+types. This may be a confusing name, as enumerations seem to have no
+relation to numbers. Yet if you dig a little deeper, you may find that
+enumerations and tuples have mathematical structure, very similar to
+arithmetic.</p>
+<p>Before we explore this structure, we need to consider the question of
+when two types are the same. This may seem like a very strange question
+to ask — isn&#39;t it obvious that <code>String</code> and <code>String</code> are equal, but
+<code>String</code> and <code>Int</code> are not? However, as soon as you add generics,
+enumerations, structs, and functions to the mix, the answer is not so
+obvious. Such a simple question is still the subject of active research
+exploring the <a href="http://objc.io/fpinswift/16">very foundations of
+mathematics</a>. For the purpose of this
+subsection, we will study when two types are <em>isomorphic</em>.</p>
+<p>Intuitively, the two types <code>A</code> and <code>B</code> are isomorphic if we can convert
+between them without losing any information. We need to have two
+functions, <code>f : A -&gt; B</code> and <code>g : B -&gt; A</code>, which are the inverse of one
+another. More specifically, for <code>x : A</code>, the result of calling <code>g(f(x))</code>
+must be equal to <code>x</code>; similarly, for all <code>y : B</code>, the result of
+<code>f(g(y))</code> must be equal to <code>y</code>. This definition crystallizes the
+intuition we stated above: we can convert freely between the types <code>A</code>
+and <code>B</code> using <code>f</code> and <code>g</code>, without ever losing information (as we can
+always undo <code>f</code> using <code>g</code>, and vice versa). This definition is not
+precise enough for most programming purposes — 64 bits can be used to
+represent integers or memory addresses, even if these are two very
+different concepts. They will be useful, however, as we study the
+algebraic structure of types.</p>
+<p>To begin with, consider the following enumeration:</p>
+
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+var structOrigin: PointStruct = setStructToOrigin(structPoint)

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 23</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>We do not want to advocate that <code>&gt;&gt;=</code> is the &#39;right&#39; way to combine
+optional values. Instead, we hope to show that optional binding is not
+magically built-in to the Swift compiler, but rather a control structure
+you can implement yourself using a higher-order function.</p>
+<h2 id="why-optionals-">Why Optionals?</h2>
+<p>What&#39;s the point of introducing an explicit optional type? For
+programmers used to Objective-C, working with optional types may seem
+strange at first. The Swift type system is rather rigid: whenever we
+have an optional type, we have to deal with the possibility of it being
+<code>nil</code>. We have had to write new functions like <code>map</code> to manipulate
+optional values. In Objective-C, you have more flexibility. For
+instance, when translating the example above to Objective-C, there is no
+compiler error:</p>
+<pre><code class="lang-objc">- (int)populationOfCapital:(NSString *)country 
+{
+    return [self.cities[self.capitals[country]] intValue] * 1000;
+}
+</code></pre>
+<p>We can pass in <code>nil</code> for the name of a country, and we get back a result
+of <code>0.0</code>. Everything is fine. In many languages without optionals, null
+pointers are a source of danger. Much less so in Objective-C. In
+Objective-C, you can safely send messages to <code>nil</code>, and depending on the
+return type, you either get <code>nil</code>, 0, or similar “zero-like” values. Why
+change this behavior in Swift?</p>
+<p>The choice for an explicit optional type fits with the increased static
+safety of Swift. A strong type system catches errors before code is
+executed, and an explicit optional type helps protect you from
+unexpected crashes arising from missing values.</p>
+<p>The default zero-like behavior employed by Objective-C has its
+drawbacks. You may want to distinguish between failure (a key is not in
+the dictionary) and success-returning <code>nil</code> (a key is in the dictionary,
+but associated with <code>nil</code>). To do that in Objective-C, you have to use
+<code>NSNull</code>.</p>
+<p>While it is safe in Objective-C to send messages to <code>nil</code>, it is often
+not safe to use them. Let&#39;s say we want to create an attributed string.
+If we pass in <code>nil</code> as the argument for <code>country</code>, the <code>capital</code> will
+also be <code>nil</code>, but <code>NSAttributedString</code> will crash when trying to
+initialize it with a <code>nil</code> value:</p>
+<pre><code class="lang-objc">- (NSAttributedString *)attributedCapital:(NSString *)country 
+{
+    NSString *capital = self.capitals[country];
+    NSDictionary *attributes = @{ /* ... */ };
+    return [[NSAttributedString alloc] initWithString:capital 
+                                           attributes:attributes];
+}
+</code></pre>
+<p>While crashes like that don&#39;t happen too often, almost every developer
+has had code like this crash. Most of the time, these crashes are
+detected during debugging, but it is very possible to ship code without
+noticing that, in some cases, a variable might unexpectedly be <code>nil</code>.
+Therefore, many programmers use asserts to verify this behavior. For
+example, we can add an <code>NSParameterAssert</code> to make sure we crash quickly
+when the <code>country</code> is <code>nil</code>:</p>
+<pre><code class="lang-objc">- (NSAttributedString *)attributedCapital:(NSString *)country 
+{
+    NSParameterAssert(country);
+    NSString *capital = self.capitals[country];
+    NSDictionary *attributes = @{ /* ... */ };
+    return [[NSAttributedString alloc] initWithString:capital 
+                                           attributes:attributes];
+}
+</code></pre>
+<p>Now, when we pass in a country value that is <code>nil</code>, the assert fails
+immediately, and we are almost certain to hit this during debugging. But
+what if we pass in a <code>country</code> value that doesn&#39;t have a matching key in
+<code>self.capitals</code>? This is much more likely, especially when <code>country</code>
+comes from user input. In that case, <code>capital</code> will be <code>nil</code> and our
+code will still crash. Of course, this can be fixed easily enough. The
+point is, however, that it is easier to write <em>robust</em> code using <code>nil</code>
+in Swift than in Objective-C.</p>
+<p>Finally, using these assertions is inherently non-modular. Suppose we
+implement a <code>checkCountry</code> method that checks that a non-empty
+<code>NSString*</code> is supported. We can incorporate this check easily enough:</p>
+<pre><code class="lang-objc">- (NSAttributedString *)attributedCapital:(NSString*)country 
+{
+    NSParameterAssert(country);
+    if (checkCountry(country)) {
+        // ...
+    }
+}
+</code></pre>
+<p>Now the question arises: should the <code>checkCountry</code> function also assert
+that its argument is non-<code>nil</code>? On one hand, it should not — we have
+just performed the check in the <code>attributedCapital</code> method. On the other
+hand, if the <code>checkCountry</code> function only works on non-<code>nil</code> values, we
+should duplicate the assertion. We are forced to choose between exposing
+an unsafe interface or duplicating assertions. It is also possible to
+add a <code>nonnull</code> attribute to the signature, which will emit a warning
+when the method is called with a value that could be <code>nil</code>, but this is
+not common practice in most Objective-C codebases.</p>
+<p>In Swift, things are a bit better. Function signatures using optionals
+explicitly state which values may be <code>nil</code>. This is invaluable
+information when working with other peoples&#39; code. A signature like the
+following provides a lot of information:</p>
+<pre><code>func attributedCapital(country: String) -&gt; NSAttributedString?
+</code></pre><p>Not only are we warned about the possibility of failure, but we know
+that we must pass a <code>String</code> as argument — and not a <code>nil</code> value. A
+crash like the one we described above will not happen. Furthermore, this
+is information <em>checked</em> by the compiler. Documentation goes out of date
+easily; you can always trust function signatures.</p>
+<p>When dealing with scalar values, optionality is even more tricky in
+Objective-C. Consider the following sample, that tries to find mentions
+of a specific keyword in a string. It looks innocent enough: if
+<code>rangeOfString:</code> does not find the string, then the location will be set
+to <code>NSNotFound</code>. <code>NSNotFound</code> is defined as -1. This code is almost
+correct, and the problem is hard to see at first sight: when
+<code>someString</code> is <code>nil</code>, then <code>rangeOfString:</code> will return a structure
+filled with zeroes, and the <code>location</code> will return 0. The check will
+then succeed, and the code inside the if-statement will be executed:</p>
+<pre><code class="lang-objc">NSString *someString = ...; 
+if ([someString rangeOfString:@&quot;swift&quot;].location != NSNotFound]) {
+    NSLog(@&quot;Someone mentioned swift!&quot;);
+}
+</code></pre>
+<p>With optionals, this can not happen. If we wanted to port this code to
+Swift, we would need to make some structural changes. The above code
+would be rejected by the compiler, and the type system would not allow
+you to run <code>rangeOfString:</code> on a <code>nil</code> value. Instead, you first need to
+unwrap it:</p>
+<pre><code>if let someString = ... {
+    if someString.rangeOfString(&quot;swift&quot;).location != NSNotFound {
+        println(&quot;Found&quot;)
+    }
+}
+</code></pre><p>The type system will help in catching subtle errors for you. Some of
+these errors would have been easily detected during development, but
+others might accidentally end up in production code. By using optionals,
+this class of errors can be eliminated automatically.</p>
+
+  </section>
+</div>
+</body>
+</html>

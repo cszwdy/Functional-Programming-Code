@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 11</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Diagrams are defined using an enum as well. First, a diagram could be a
+primitive, which has a size and is either an ellipse, a rectangle, or
+text. Note that we call it <code>Prim</code> because, at the time of writing, the
+compiler gets confused by a case that has the same name as another enum:</p>
+<pre><code>case Prim(CGSize, Primitive)
+</code></pre><p>Then, we have cases for diagrams that are beside each other
+(horizontally) or below each other (vertically). Note how a <code>Beside</code>
+diagram is defined recursively — it consists of two diagrams next to
+each other:</p>
+<pre><code>case Beside(Diagram, Diagram)
+case Below(Diagram, Diagram)
+</code></pre><p>To style diagrams, we&#39;ll add a case for attributed diagrams. This allows
+us to set the fill color (for example, for ellipses and rectangles).
+We&#39;ll define the <code>Attribute</code> type later:</p>
+<pre><code>case Attributed(Attribute, Diagram)
+</code></pre><p>The last case is for alignment. Suppose we have a small and a large
+rectangle that are next to each other. By default, the small rectangle
+gets centered vertically, as seen in Figure \ref{fig:diagram4}.</p>
+<p><em>Playgrounds don&#39;t contain images, please see the book</em></p>
+<p>But by adding a case for alignment, we can control the alignment of
+smaller parts of the diagram:</p>
+<pre><code>case Align(Vector2D, Diagram)
+</code></pre><p>For example, Figure \ref{fig:diagram5} shows a diagram that&#39;s top
+aligned. It is drawn using the following code:</p>
+<p><em>Playgrounds don&#39;t contain images, please see the book</em></p>
+<pre><code>Diagram.Align(Vector2D(x: 0.5, y: 1), Box(blueSquare)) ||| redSquare
+</code></pre><p>Unfortunately, in the current version of Swift, recursive data types are
+not allowed. So instead of having a <code>Diagram</code> case that contains other
+<code>Diagram</code>s, we have to wrap each recursive <code>Diagram</code> with <code>Box</code> (defined
+in <a href="#enumerations">Chapter 8</a>)</p>
+
+  </section>
+</div>
+</body>
+</html>

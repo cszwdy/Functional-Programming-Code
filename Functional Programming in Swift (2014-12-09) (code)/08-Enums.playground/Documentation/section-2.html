@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 3</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>Throughout this book, we want to emphasize the important role <em>types</em>
+play in the design and implementation of Swift applications. In this
+chapter, we will describe Swift&#39;s <em>enumerations</em>, which enable you to
+craft precise types representing the data your application uses.</p>
+<h2 id="introducing-enumerations">Introducing Enumerations</h2>
+<p>When creating a string, it is important to know its character encoding.
+In Objective-C, an <code>NSString</code> object can have several possible
+encodings:</p>
+<pre><code>enum NSStringEncoding {
+    NSASCIIStringEncoding = 1,
+    NSNEXTSTEPStringEncoding = 2,
+    NSJapaneseEUCStringEncoding = 3,
+    NSUTF8StringEncoding = 4,
+    // ...
+}
+</code></pre><p>Each of these encodings is represented by a number; the <code>enum</code> allows
+programmers to assign meaningful names to the integer constants
+associated with particular character encoding.</p>
+<p>There are some drawbacks to the enumeration declarations in Objective-C
+and other C dialects. Most notably, the type <em>NSStringEncoding</em> is not
+precise enough — there are integer values, such as 16, that do not
+correspond to a valid encoding. Furthermore, because all enumerated
+types are represented by integers, we can compute with them <em>as if they
+are numbers</em>, which is also a disadvantage:</p>
+<pre><code>NSAssert(NSASCIIStringEncoding + NSNEXTSTEPStringEncoding
+         == NSJapaneseEUCStringEncoding, @&quot;Adds up...&quot;);
+</code></pre><p>Who would have thought that</p>
+<pre><code>NSASCIIStringEncoding + NSNEXTSTEPStringEncoding
+</code></pre><p>is equal to <code>NSJapaneseEUCStringEncoding</code>? Such expressions are clearly
+nonsense, yet they are happily accepted by the Objective-C compiler.</p>
+<p>Throughout the examples we have seen so far, we have used Swift&#39;s <em>type
+system</em> to catch such errors. Simply identifying enumerated types with
+integers is at odds with the one of core tenets of functional
+programming in Swift: using types effectively to rule out invalid
+programs.</p>
+<p>Swift also has an <code>enum</code> construct, but it behaves very differently from
+the one you may be familiar with from Objective-C. We can declare our
+own enumerated type for string encodings as follows:</p>
+
+  </section>
+</div>
+</body>
+</html>

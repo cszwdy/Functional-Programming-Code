@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 19</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <p>When assigned to a new variable or passed to a function, value types are
+<em>always</em> copied, whereas reference types are <em>not</em>. Instead, a reference
+to the existing object or instance is used. Any changes to this
+reference will also mutate the original object or instance.</p>
+<p>Andy Matuschak provides some very useful intuition for the difference
+between value types and reference types in <a href="http://objc.io/fpinswift/14">his article for
+objc.io</a>.</p>
+<p>Structs are not the only value type in Swift. In fact, almost all the
+types in Swift are value types, including arrays, dictionaries, numbers,
+booleans, tuples, and enums (the latter will be covered in the coming
+chapter). Classes are the exception, rather than the rule. This is one
+example of how Swift is moving away from object-oriented programming in
+favor of other programming paradigms.</p>
+<p>We will discuss the relative merits of classes and structs later on in
+this section; before we do so, we want to briefly discuss the
+interaction between the different forms of mutability that we have seen
+thus far.</p>
+<h3 id="structs-and-classes-mutable-or-not-">Structs and Classes: Mutable or Not?</h3>
+<p>In the examples above, we have declared all our points and their fields
+to be mutable, using <code>var</code> rather than <code>let</code>. The interaction between
+compound types, such as structs and classes, and the <code>var</code> and <code>let</code>
+declarations, requires some explanation.</p>
+<p>Suppose we create the following immutable <code>PointStruct</code>:</p>
+
+  </section>
+</div>
+</body>
+</html>

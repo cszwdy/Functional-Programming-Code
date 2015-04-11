@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Section 27</title>
+  <meta id="xcode-display" name="xcode-display" content="render">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<div class="content-wrapper">
+  <section class="section">
+    <h3 id="objective-c">Objective-C</h3>
+<p>The concept of mutability and immutability should already be familiar to
+many Objective-C programmers. Many of the data structures provided by
+Apple&#39;s Core Foundation and Foundation frameworks exist in immutable and
+mutable variants, such as <code>NSArray</code> and <code>NSMutableArray</code>, <code>NSString</code> and
+<code>NSMutableString</code>, and others. Using the immutable types is the default
+choice in most cases, just as Swift favors value types over reference
+types.</p>
+<p>In contrast to Swift, however, there is no foolproof way to enforce
+immutability in Objective-C. We could declare the object&#39;s properties as
+read-only (or only expose an interface that avoids mutation), but this
+will not stop us from (unintentionally) mutating values internally after
+they have been initialized. When working with legacy code, for instance,
+it is all too easy to break assumptions about mutability that cannot be
+enforced by the compiler. Without checks by the compiler, it is very
+hard to enforce any kind of discipline in the use of mutable variables.</p>
+<h2 id="discussion">Discussion</h2>
+<p>In this chapter, we have seen how Swift distinguishes between mutable
+and immutable values, and between value types and reference types. In
+this final section, we want to explain <em>why</em> these are important
+distinctions.</p>
+<p>When studying a piece of software, <em>coupling</em> measures the degree to
+which individual units of code depend on one another. Coupling is one of
+the single most important factors that determines how well software is
+structured. In the worst case, all classes and methods refer to one
+another, sharing numerous mutable variables, or even relying on exact
+implementation details. Such code can be very hard to maintain or
+update: instead of understanding or modifying a small code fragment in
+isolation, you constantly need to consider the system in its totality.</p>
+<p>In Objective-C and many other object-oriented languages, it is common
+for class methods to be coupled through shared instance variables. As a
+result, however, mutating the variable may change the behavior of the
+class&#39;s methods. Typically, this is a good thing — once you change the
+data stored in an object, all its methods may refer to its new value. At
+the same time, however, such shared instance variables introduce
+coupling between all the class&#39;s methods. If any of these methods or
+some external function invalidate the shared state, all the class&#39;s
+methods may exhibit buggy behavior. It is much harder to test any of
+these methods in isolation, as they are now coupled to one another.</p>
+<p>Now compare this to the functions that we tested in the
+<a href="#quickcheck">QuickCheck</a> chapter. Each of these functions computed an
+output value that <em>only</em> depended on the input values. Such functions
+that compute the same output for equal inputs are sometimes called
+<em>referentially transparent</em>. By definition, referentially transparent
+methods are loosely coupled from their environments: there are no
+implicit dependencies on any state or variables, aside from the
+function&#39;s arguments. Consequently, referentially transparent functions
+are easier to test and understand in isolation. Furthermore, we can
+compose, call, and assemble functions that are referentially transparent
+without losing this property. Referential transparency is a guarantee of
+modularity and reusability.</p>
+<p>Referential transparency increases modularity on all levels. Imagine
+reading through an API, trying to figure out how it works. The
+documentation may be sparse or out of date. But if you know the API is
+free of mutable state — all variables are declared using <code>let</code> rather
+than <code>var</code> — this is incredibly valuable information. You never need to
+worry about initializing objects or processing commands in exactly the
+right order. Instead, you can just look at types of the functions and
+constants that the API defines, and how these can be assembled to
+produce the desired value.</p>
+<p>Swift&#39;s distinction between <code>var</code> and <code>let</code> enables programmers not only
+to distinguish between mutable and immutable data, but also to have the
+compiler enforce this distinction. Favoring <code>let</code> over <code>var</code> reduces the
+complexity of the program — you no longer have to worry about what the
+current value of mutable variables is, but can simply refer to their
+immutable definitions. Favoring immutability makes it easier to write
+referentially transparent functions, and ultimately, reduces coupling.</p>
+<p>Similarly, Swift&#39;s distinction between value types and reference types
+encourages you to distinguish between mutable objects that may change
+and immutable data that your program manipulates. Functions are free to
+copy, change, or share values — any modifications will only ever affect
+their local copies. Once again, this helps write code that is more
+loosely coupled, as any dependencies resulting from shared state or
+objects can be eliminated.</p>
+<p>Can we do without mutable variables entirely? Pure programming
+languages, such as Haskell, encourage programmers to avoid using mutable
+state altogether. There are certainly large Haskell programs that do not
+use any mutable state. In Swift, however, dogmatically avoiding <code>var</code> at
+all costs will not necessarily make your code better. There are plenty
+of situations where a function uses some mutable state internally.
+Consider the following example function that sums the elements of an
+array:</p>
+
+  </section>
+</div>
+</body>
+</html>
